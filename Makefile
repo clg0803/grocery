@@ -2,7 +2,7 @@ source = server.c cook.c
 target = server
 
 server: $(source)
-	clang -Wall $(source) -o $(target)
+	clang $(source) -o $(target)
 
 .PHONY:clean
 clean:
