@@ -1,10 +1,10 @@
-#include <threads.h>
+#include <pthread.h>
 #include <stdbool.h>
 #include <stdio.h>
 
 #include "cook.h"
 
-void cook(int client_socket) {
+void* fire(void* client_socket) {
     char buf[1024];
     read(client_socket, buf, 1024);
     printf("%s", buf);
@@ -18,4 +18,14 @@ void cook(int client_socket) {
     write(client_socket, body, sizeof(body));
 
     close(client_socket);
+}
+
+void cook(int client_socket) {
+    pthread_t tid;
+    int err = pthread_create(&tid, NULL, fire, &client_socket);
+    if (err) {
+        // 
+        puts("Failed to create a thread to handle requests ...");
+        return;
+    }
 }

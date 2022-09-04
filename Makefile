@@ -1,9 +1,18 @@
 source = server.c cook.c
 target = server
 
-server: $(source)
-	clang $(source) -o $(target)
+config = -l pthread -Wall
 
-.PHONY:clean
+server: $(source)
+	gcc $(source) -o $(target) $(config)
+
+
+debug: $(source)
+	gcc $(source) -o $(target) $(config) -g
+
+.PHONY:clean kill
 clean:
 	rm -f $(target)
+
+kill:
+	pgrep server -x | xargs kill -9
