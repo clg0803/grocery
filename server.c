@@ -3,7 +3,8 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <string.h>
-#include <stdio.h>
+
+#include "cook.h"
 
 #define PORT 8080
 
@@ -23,20 +24,7 @@ int main() {
 	for (;;) {
 		// blocked
 		int client_socket = accept(server_socket, NULL, NULL);
-	
-		char buf[1024];
-		read(client_socket, buf, 1024);
-		printf("%s", buf);
-	
-		char status[] = "HTTP/1.0 200 OK\r\n";
-	    char header[] = "Server: DWBServer\r\nContent-Type: text/html;charset=utf-8\r\n\r\n";
-	    char body[] = "<html><head><title>C语言构建小型Web服务器</title></head><body><h2>欢迎</h2><p>Hello，World</p></body></html>";
-	
-		write(client_socket, status, sizeof(status));
-	    write(client_socket, header, sizeof(header));
-	    write(client_socket, body, sizeof(body));
-	
-	    close(client_socket);
+		cook(client_socket);
 	}
 	// nerver reach there
     close(server_socket);

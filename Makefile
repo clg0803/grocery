@@ -1,6 +1,9 @@
-server: server.c
-	gcc -Wall server.c -o server
+source = server.c cook.c
+target = server
 
-.PHNOY:
+server: $(source)
+	clang -Wall $(source) -o $(target)
+
+.PHONY:clean
 clean:
-	rm -f server
+	rm -f $(target)
