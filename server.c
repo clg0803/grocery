@@ -21,6 +21,8 @@ int main() {
 
 	listen(server_socket, 5);
 
+	printf("Grocery init success ... \nListen on %d \n", PORT);
+
 	for (;;) {
 		// blocked
 		int client_socket = accept(server_socket, NULL, NULL);
