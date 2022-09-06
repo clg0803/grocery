@@ -3,6 +3,8 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <string.h>
+#include <stdio.h>
+#include <pthread.h>
 
 #include "cook.h"
 
@@ -21,12 +23,17 @@ int main() {
 
 	listen(server_socket, 5);
 
-	printf("Grocery init success ... \nListen on %d \n", PORT);
+	printf("🛒 Grocery init success ... \nListen on %d \n", PORT);
 
 	for (;;) {
 		// blocked
 		int client_socket = accept(server_socket, NULL, NULL);
-		cook(client_socket);
+		pthread_t tid = -1;
+		ingredient in = {client_socket};
+		int err = pthread_create(&tid, NULL, &cook, (void *) &in);
+		if (err) {
+			puts("Failed to create a thread to handle requests ...");
+		}
 	}
 	// nerver reach there
     close(server_socket);
