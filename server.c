@@ -2,7 +2,6 @@
 #include <sys/un.h>
 #include <arpa/inet.h>
 #include <unistd.h>
-#include <string.h>
 #include <stdio.h>
 #include <pthread.h>
 
